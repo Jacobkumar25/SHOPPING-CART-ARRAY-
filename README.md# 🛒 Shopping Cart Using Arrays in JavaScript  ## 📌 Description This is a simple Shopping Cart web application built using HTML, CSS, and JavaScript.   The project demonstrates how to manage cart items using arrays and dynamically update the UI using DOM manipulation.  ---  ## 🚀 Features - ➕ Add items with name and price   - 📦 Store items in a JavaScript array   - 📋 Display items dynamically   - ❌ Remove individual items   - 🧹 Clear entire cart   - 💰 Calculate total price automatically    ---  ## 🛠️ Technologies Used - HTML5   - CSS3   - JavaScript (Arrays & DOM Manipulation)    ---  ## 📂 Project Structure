@@ -1,0 +1,26 @@
+# 🛒 Shopping Cart Using Arrays in JavaScript
+
+## 📌 Description
+This is a simple Shopping Cart web application built using HTML, CSS, and JavaScript.  
+The project demonstrates how to manage cart items using arrays and dynamically update the UI using DOM manipulation.
+
+---
+
+## 🚀 Features
+- ➕ Add items with name and price  
+- 📦 Store items in a JavaScript array  
+- 📋 Display items dynamically  
+- ❌ Remove individual items  
+- 🧹 Clear entire cart  
+- 💰 Calculate total price automatically  
+
+---
+
+## 🛠️ Technologies Used
+- HTML5  
+- CSS3  
+- JavaScript (Arrays & DOM Manipulation)  
+
+---
+
+## 📂 Project Structure
