@@ -1,49 +1,138 @@
-class Item {
-    String name;
-    double price;
-    int quantity;
-
-    public Item(String name, double price, int quantity) {
-        this.name = name;
-        this.price = price;
-        this.quantity = quantity;
-    }
-}
-
-public class ShoppingCart {
-    private Item[] cart;
-    private int itemCount;
-    private double totalBill;
-
-    public ShoppingCart(int capacity) {
-        cart = new Item[capacity]; // Initialize array with fixed capacity
-        itemCount = 0;
-        totalBill = 0;
-    }
-
-    public void addItem(String name, double price, int qty) {
-        if (itemCount < cart.length) {
-            cart[itemCount] = new Item(name, price, qty);
-            totalBill += (price * qty);
-            itemCount++;
-            System.out.println(name + " added to cart.");
-        } else {
-            System.out.println("Error: Shopping cart is full!");
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shopping Cart (Array)</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f4f4;
+            text-align: center;
         }
-    }
 
-    public void displayCart() {
-        System.out.println("\n--- Your Shopping Cart ---");
-        for (int i = 0; i < itemCount; i++) {
-            System.out.println(cart[i].name + " | Price: $" + cart[i].price + " | Qty: " + cart[i].quantity);
+        .container {
+            width: 350px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px gray;
         }
-        System.out.println("Total Amount: $" + totalBill);
+
+        input {
+            padding: 8px;
+            margin: 5px;
+            width: 120px;
+        }
+
+        button {
+            padding: 8px 10px;
+            margin: 5px;
+            background: green;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: darkgreen;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            background: #eee;
+            margin: 5px;
+            padding: 8px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .remove {
+            background: red;
+        }
+
+        .total {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>🛒 Shopping Cart</h2>
+
+    <input type="text" id="itemName" placeholder="Item Name">
+    <input type="number" id="itemPrice" placeholder="Price">
+
+    <br>
+    <button onclick="addItem()">Add Item</button>
+    <button onclick="clearCart()">Clear Cart</button>
+
+    <ul id="cartList"></ul>
+
+    <div class="total">Total: ₹ <span id="totalPrice">0</span></div>
+</div>
+
+<script>
+    let cart = [];
+
+    function addItem() {
+        let name = document.getElementById("itemName").value;
+        let price = parseFloat(document.getElementById("itemPrice").value);
+
+        if (name === "" || isNaN(price)) {
+            alert("Enter valid item and price");
+            return;
+        }
+
+        let item = {
+            name: name,
+            price: price
+        };
+
+        cart.push(item);
+        displayCart();
+
+        document.getElementById("itemName").value = "";
+        document.getElementById("itemPrice").value = "";
     }
 
-    public static void main(String[] args) {
-        ShoppingCart myCart = new ShoppingCart(5);
-        myCart.addItem("Laptop", 1200.00, 1);
-        myCart.addItem("Mouse", 25.50, 2);
-        myCart.displayCart();
+    function displayCart() {
+        let list = document.getElementById("cartList");
+        let total = 0;
+
+        list.innerHTML = "";
+
+        cart.forEach((item, index) => {
+            total += item.price;
+
+            let li = document.createElement("li");
+            li.innerHTML = `
+                ${item.name} - ₹${item.price}
+                <button class="remove" onclick="removeItem(${index})">X</button>
+            `;
+
+            list.appendChild(li);
+        });
+
+        document.getElementById("totalPrice").innerText = total;
     }
-}
+
+    function removeItem(index) {
+        cart.splice(index, 1);
+        displayCart();
+    }
+
+    function clearCart() {
+        cart = [];
+        displayCart();
+    }
+</script>
+
+</body>
+</html>
